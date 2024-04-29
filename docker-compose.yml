@@ -1,16 +1,16 @@
 version: "3.8"
 
-# networks:
-#   default:
-#     driver: bridge
-#     ipam:
-#       config:
-#         - subnet: 172.16.1.0/24
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.1.0/24
 
 services:
   # Контейнер с базой данных
   db:
-    # container_name: node_db
+    container_name: db
     image: "postgres:14.9-alpine"
     restart: always
     ports:
@@ -66,6 +66,7 @@ services:
 
   # Контейнер для клиент-приложения
   client:
+    container_name: client
     build:
       context: ../onstock-client
       dockerfile: ../dev-config/Dockerfile.client.dev
@@ -73,11 +74,10 @@ services:
       - "3000:3000"
     volumes:
       - ../onstock-client:/usr/app
-    networks:
-      - strapi
 
     # Контейнер для server-приложения
   cms:
+    container_name: server
     depends_on:
       - db
     restart: unless-stopped
@@ -99,11 +99,7 @@ services:
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_CLIENT: postgres
       DATABASE_HOST: db
-    networks:
-      - strapi
 
-networks:
-  strapi:
 
 volumes:
   db:
