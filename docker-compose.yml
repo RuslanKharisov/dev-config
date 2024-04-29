@@ -65,40 +65,40 @@ services:
   #   command: certonly --webroot --webroot-path=/var/www/certbot --email somemail@somemail.com --staging  -d somedomen.ru -d www.somedomen.ru -->
 
   # Контейнер для клиент-приложения
-  client:
-    container_name: client
-    build:
-      context: ../onstock-client
-      dockerfile: ../dev-config/Dockerfile.client.dev
-    ports:
-      - "3000:3000"
-    volumes:
-      - ../onstock-client:/usr/app
+  # client:
+  #   container_name: client
+  #   build:
+  #     context: ../onstock-client
+  #     dockerfile: ../dev-config/Dockerfile.client.dev
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ../onstock-client:/usr/app
 
     # Контейнер для server-приложения
-  cms:
-    container_name: server
-    depends_on:
-      - db
-    restart: unless-stopped
-    build:
-      context: ../onstock-cms
-      dockerfile: ../dev-config/Dockerfile.cms.dev
-    ports:
-      - "1337:1337"
-    volumes:
-      - ../onstock-cms:/usr/app
-      - /usr/app/node_modules
-    environment:
-      APP_KEYS: ${APP_KEYS}
-      API_TOKEN_SALT: ${API_TOKEN_SALT}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-      TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_CLIENT: postgres
-      DATABASE_HOST: db
+  # cms:
+  #   container_name: server
+  #   depends_on:
+  #     - db
+  #   restart: unless-stopped
+  #   build:
+  #     context: ../onstock-cms
+  #     dockerfile: ../dev-config/Dockerfile.cms.dev
+  #   ports:
+  #     - "1337:1337"
+  #   volumes:
+  #     - ../onstock-cms:/usr/app
+  #     - /usr/app/node_modules
+  #   environment:
+  #     APP_KEYS: ${APP_KEYS}
+  #     API_TOKEN_SALT: ${API_TOKEN_SALT}
+  #     ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+  #     TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT}
+  #     DATABASE_USERNAME: ${DATABASE_USERNAME}
+  #     DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+  #     DATABASE_NAME: ${DATABASE_NAME}
+  #     DATABASE_CLIENT: postgres
+  #     DATABASE_HOST: db
 
 
 volumes:
